@@ -15,6 +15,9 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
+        if root is None:
+            return []
+
         zigzag_vals = [[root.val]]
         parent_nodes = [root]
 
@@ -39,9 +42,10 @@ class Solution(object):
             parent_nodes = child_nodes
 
         # let's zig zag these vals
-        for tree_layer_index in range(zig_zag_vals):
+        for tree_layer_index in range(len(zigzag_vals)):
             if (tree_layer_index % 2) == 1:
-                zig_zag_vals[tree_layer_index].reverse()
+                zigzag_vals[tree_layer_index].reverse()
 
 
-        return [parent_vals, child_vals.reverse(), grandchild_vals]```
+        return zigzag_vals
+```
