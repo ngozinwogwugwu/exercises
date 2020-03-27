@@ -1,6 +1,4 @@
-
 import unittest
-import numpy as np
 
 class Solution(object):
     def uniquePathsWithObstacles(self, obstacle_grid):
@@ -11,7 +9,12 @@ class Solution(object):
         m = len(obstacle_grid)
         n = len(obstacle_grid[0])
 
-        self.grid = np.zeros((m, n), dtype=int)
+        self.grid = []
+        for i in range(m):
+            row = []
+            for j in range(n):
+                row.append(0)
+            self.grid.append(row)
 
         if obstacle_grid[m - 1][n - 1] is 0:
             self.grid[m - 1][n - 1] = 1
