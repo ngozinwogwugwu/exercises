@@ -3,6 +3,20 @@ from circular_queue import MyCircularQueue
 
 
 class TestMyCircularQueue(unittest.TestCase):
+  def test_other_test_case_from_leetcode(self):
+    circularQueue = MyCircularQueue(6)
+    self.assertEqual(circularQueue.enQueue(6), True)
+    self.assertEqual(circularQueue.Rear(), 6)
+    self.assertEqual(circularQueue.Rear(), 6)
+    self.assertEqual(circularQueue.deQueue(), True)
+    self.assertEqual(circularQueue.enQueue(5), True)
+    self.assertEqual(circularQueue.Rear(), 5)
+    self.assertEqual(circularQueue.deQueue(), True)
+    self.assertEqual(circularQueue.Front(), -1)
+    self.assertEqual(circularQueue.deQueue(), False)
+    self.assertEqual(circularQueue.deQueue(), False)
+    self.assertEqual(circularQueue.deQueue(), False)
+
   def test_init(self):
     circ_q = MyCircularQueue(4)
 
