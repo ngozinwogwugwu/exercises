@@ -1,11 +1,6 @@
 from point import Point
 from line_segment import LineSegment
-from collections import namedtuple
-
-SlopeAndPoint = namedtuple(
-  'SlopeAndPoint', ['slope', 'point']
-)
-
+from collections import namedtuple, defaultdict
 
 class CollinearPoints:
   def __init__(self, points):
@@ -15,28 +10,38 @@ class CollinearPoints:
   def __repr__(self):
     return str(self.points)
 
-  def get_slopes_and_points(self, origin):
-    slopes_and_points = []
+
+  def segments(self):
+    segments = []
     for point in self.points:
-      slopes_and_points.append(
-        SlopeAndPoint(origin.slope_to(point), point)
-      )
+      new_segments = self.get_collinear_line_segments_for_single_point(point)
+      segments = segments + new_segments
 
-    return slopes_and_points
+    return segments
 
-  # def get_groups_of_four_collinear_points(self):
-  #   if len(self.points) < 4:
-  #     return
+  def get_collinear_line_segments_for_single_point(self, origin):
+    qualifying_sets = self.get_sets_of_qualifying_points(origin)
+    line_segments = []
 
-  #   for point in self.points:
-  #     get_segments(point)
+    for qualifying_set in qualifying_sets:
+      qualifying_set.append(origin)
+      qualifying_set.sort()
 
-  # def get_segments(self, point):
-  #   slopes_and_points = get_slopes_and_points(point)
-  #   slopes_and_points.sort()
-  #   entries_so_far = []
-  #   for slope_and_point in slopes_and_points:
-  #     if len(entries_so_far) < 1:
-  #       entries_so_far.append(slope_and_point)
-  #     else:
+      min_point = qualifying_set[0]
+      max_point = qualifying_set[len(qualifying_set)-1]
+      line_segments.append(LineSegment(min_point, max_point))
 
+    return line_segments
+
+  def get_sets_of_qualifying_points(self, origin):
+    slopes_and_points = defaultdict(list)
+    for point in self.points:
+      if point is not origin:
+        slopes_and_points[origin.slope_to(point)].append(point)
+
+    return list(dict(
+          filter(
+            lambda item: len(item[1]) > 2,
+            slopes_and_points.items()
+          )
+        ).values())

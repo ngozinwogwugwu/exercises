@@ -1,7 +1,7 @@
 import unittest
 from point import Point
 from line_segment import LineSegment
-from collinear_points import CollinearPoints, SlopeAndPoint
+from collinear_points import CollinearPoints
 
 
 class TestPoint(unittest.TestCase):
@@ -21,11 +21,11 @@ class TestPoint(unittest.TestCase):
 
     def test_compare_to(self):
         point = Point(0, 0)
-        self.assertEqual(point.compare_to(Point(1, 0)), -1)
-        self.assertEqual(point.compare_to(Point(0, 1)), -1)
-        self.assertEqual(point.compare_to(Point(-1, -4)), 1)
-        self.assertEqual(point.compare_to(Point(-1, -2)), 1)
-        self.assertEqual(point.compare_to(Point(0, 0)), 0)
+        self.assertEqual(point.__lt__(Point(1, 0)), True)
+        self.assertEqual(point.__lt__(Point(0, 1)), True)
+        self.assertEqual(point.__lt__(Point(-1, -4)), False)
+        self.assertEqual(point.__lt__(Point(-1, -2)), False)
+        self.assertEqual(point.__lt__(Point(0, 0)), False)
 
 
 class TestCollinearPoints(unittest.TestCase):
@@ -36,28 +36,37 @@ class TestCollinearPoints(unittest.TestCase):
         cls.point_3 = Point(4, 9)
         cls.point_4 = Point(5, 8)
         cls.point_5 = Point(6, 7)
+        cls.point_6 = Point(6, 8)
+        cls.point_7 = Point(9, 12)
+        cls.point_8 = Point(12, 16)
 
         cls.points = [
             cls.point_1,
             cls.point_2,
             cls.point_3,
             cls.point_4,
-            cls.point_5
+            cls.point_5,
+            cls.point_6,
+            cls.point_7,
+            cls.point_8
         ]
 
         cls.collinear_points = CollinearPoints(cls.points)
 
     def test_get_slopes_and_points(self):
-        actual = self.collinear_points.get_slopes_and_points(
+        actual = self.collinear_points.get_sets_of_qualifying_points(
             self.point_1)
-        expected = [
-            SlopeAndPoint(slope=self.point_1.slope_to(self.point_1), point=self.point_1), 
-            SlopeAndPoint(slope=self.point_1.slope_to(self.point_2), point=self.point_2),
-            SlopeAndPoint(slope=self.point_1.slope_to(self.point_3), point=self.point_3),
-            SlopeAndPoint(slope=self.point_1.slope_to(self.point_4), point=self.point_4),
-            SlopeAndPoint(slope=self.point_1.slope_to(self.point_5), point=self.point_5)
-        ]
+        expected = [[self.point_2, self.point_6, self.point_7, self.point_8]]
+
         self.assertEqual(actual, expected)
+
+    def test_get_collinear_line_segments_for_single_point(self):
+        line_segment = self.collinear_points.get_collinear_line_segments_for_single_point(
+            self.point_1)[0]
+        self.assertEqual(line_segment.p, self.point_1)
+        self.assertEqual(line_segment.q, self.point_8)
+
+
 
 
 if __name__ == "__main__":

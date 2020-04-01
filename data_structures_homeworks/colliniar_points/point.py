@@ -18,15 +18,12 @@ class Point:
       else:
         return float('-inf')
 
-  def compare_to(self, other_point):
-    if self.y > other_point.y:
-      return 1
-    if other_point.y > self.y:
-      return -1
+  def __lt__(self, other):
+    if self.y < other.y:
+      return True
+    if self.y > other.y:
+      return False
 
-    if self.x > other_point.x:
-      return 1
-    if other_point.x > self.x:
-      return -1
-
-    return 0
+    if self.x < other.x:
+      return True
+    return False
