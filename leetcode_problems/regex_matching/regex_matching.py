@@ -62,5 +62,8 @@ class TestSolution(unittest.TestCase):
         self.assertTrue(self.solution.isMatch("mississippi", "mis*is*ip*."))
         self.assertFalse(self.solution.isMatch("mississippi", "mis*is*p*."))
 
+    def wrench(self):
+        self.assertTrue(self.solution.isMatch("aa", "a*a"))
+
 if __name__ == '__main__':
     unittest.main()
