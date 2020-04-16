@@ -1,5 +1,7 @@
 import unittest
 
+# leetcode problem: https://leetcode.com/problems/regular-expression-matching
+
 class Solution(object):
     def isMatch(self, string, pattern):
         s_idx = len(string) - 1
@@ -12,6 +14,9 @@ class Solution(object):
                 if pattern[p_idx] is '.':
                     return True
 
+                # this breaks for string="aa", pattern="aa*" because
+                # my algorithm assumes that 'a*' applies to all of the a's in the string
+                # a better approach would be to handle the * after dealing with the stricter matches
                 while string[s_idx] is pattern[p_idx] and s_idx >= 0:
                     s_idx -= 1
                 p_idx -= 1
@@ -62,8 +67,11 @@ class TestSolution(unittest.TestCase):
         self.assertTrue(self.solution.isMatch("mississippi", "mis*is*ip*."))
         self.assertFalse(self.solution.isMatch("mississippi", "mis*is*p*."))
 
-    def wrench(self):
+    def test_wrench(self):
         self.assertTrue(self.solution.isMatch("aa", "a*a"))
+        # self.assertTrue(self.solution.isMatch("aa", "aa*")) # breaks, see note
+        self.assertTrue(self.solution.isMatch("aaa", "b*a*c*a"))
+        # self.assertTrue(self.solution.isMatch("aaa", "ab*a*c*a")) # breaks, see note
 
 if __name__ == '__main__':
     unittest.main()
