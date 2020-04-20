@@ -1,5 +1,6 @@
-from point_2d import Point_2d
-from line_segment import LineSegment
+import matplotlib.pyplot as plt
+from point_2d import Point
+from line_segment import Color, LineSegment
 
 
 class Rectangle:
@@ -9,24 +10,16 @@ class Rectangle:
     self.y_min = y_min
     self.y_max = y_max
 
-    self.top_left = Point_2d(x_min, y_max)
-    self.top_right = Point_2d(x_max, y_max)
-    self.bottom_left = Point_2d(x_min, y_min)
-    self.bottom_right = Point_2d(x_max, y_min)
+    self.top_left = Point(x_min, y_max)
+    self.top_right = Point(x_max, y_max)
+    self.bottom_left = Point(x_min, y_min)
+    self.bottom_right = Point(x_max, y_min)
 
-    self.corners = [
-        self.top_left, self.top_right, self.bottom_left, self.bottom_right
-    ]
-
-    self.top_segment = LineSegment(self.top_left, self.top_right)
-    self.bottom_segment = LineSegment(self.bottom_left, self.bottom_right)
-    self.left_segment = LineSegment(self.top_left, self.bottom_left)
-    self.right_segment = LineSegment(self.top_right, self.bottom_right)
     self.line_segments = [
-        self.top_segment,
-        self.bottom_segment,
-        self.left_segment,
-        self.right_segment
+      LineSegment(self.top_left, self.top_right),
+      LineSegment(self.bottom_left, self.bottom_right),
+      LineSegment(self.top_left, self.bottom_left),
+      LineSegment(self.top_right, self.bottom_right),
     ]
 
   def __repr__(self) -> str:
@@ -35,7 +28,11 @@ class Rectangle:
   def __eq__(self, other) -> bool:
     return self.x_min == other.x_min and self.x_max == other.x_max and self.y_min == other.y_min and self.y_max == other.y_max
 
-  def contains(self, point: Point_2d) -> bool:
+  def draw(self):
+    for segment in self.line_segments:
+      segment.draw(Color.BLACK)
+
+  def contains(self, point: Point) -> bool:
     return point.x <= self.x_max and point.x >= self.x_min and point.y <= self.y_max and point.y >= self.y_min
 
   def intersects(self, other):

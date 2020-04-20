@@ -1,12 +1,16 @@
+import matplotlib.pyplot as plt
 from math import sqrt
 
-class Point_2d:
+class Point:
   def __init__(self, x: float, y: float) -> None:
     self.x = x
     self.y = y
 
   def __repr__(self) -> str:
     return f"({self.x}, {self.y})"
+
+  def draw(self):
+    plt.plot(self.x, self.y, 'ko')
 
   def distance_to(self, other_point) -> float:
     return sqrt(self.distance_squared_to(other_point))

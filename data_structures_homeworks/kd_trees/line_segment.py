@@ -1,4 +1,6 @@
-from point_2d import Point_2d
+import matplotlib.pyplot as plt
+from enum import Enum
+from point_2d import Point
 from math import sqrt
 
 
@@ -10,8 +12,14 @@ class LinesParallelError(Exception):
   pass
 
 
+class Color(Enum):
+  BLACK = "k-"
+  RED = "r-"
+  BLUE = "b-"
+
+
 class Line:
-  def __init__(self, p: Point_2d, q: Point_2d):
+  def __init__(self, p: Point, q: Point):
     self.point = p
     self.slope = self.point.slope_to(q)
     self.y_intercept = self.get_y_intercept()
@@ -34,11 +42,11 @@ class Line:
       raise Exception('no y')
     return (self.slope * x) + self.y_intercept
 
-  def perpenducular_line_through_point(self, point: Point_2d):
+  def perpenducular_line_through_point(self, point: Point):
     if is_infinity(self.slope):
-      return Line(point, Point_2d(point.x - 1, point.y))
+      return Line(point, Point(point.x - 1, point.y))
     elif self.slope == 0:
-      return Line(point, Point_2d(point.x, point.y - 1))
+      return Line(point, Point(point.x, point.y - 1))
 
     # get slope and y intercept of perpendicular line
     slope = -self.slope
@@ -48,13 +56,13 @@ class Line:
     other_x = point.x - 1
     other_y = (slope * other_x) + y_intercept
 
-    return Line(point, Point_2d(other_x, other_y))
+    return Line(point, Point(other_x, other_y))
 
-  def closest_position_to_point(self, point: Point_2d) -> Point_2d:
+  def closest_position_to_point(self, point: Point) -> Point:
     perpendicular_line = self.perpenducular_line_through_point(point)
     return self.intersects_at(perpendicular_line)
 
-  def intersects_at(self, other) -> Point_2d:
+  def intersects_at(self, other) -> Point:
     if self.slope == other.slope:
       raise LinesParallelError
 
@@ -70,14 +78,22 @@ class Line:
       x = (other.y_intercept - self.y_intercept) / (self.slope - other.slope)
       y = (self.slope * x) + self.y_intercept
 
-    return Point_2d(x, y)
+    return Point(x, y)
 
 
 class LineSegment:
-  def __init__(self, p: Point_2d, q: Point_2d):
+  def __init__(self, p: Point, q: Point):
     self.p = p
     self.q = q
     self.line = Line(p, q)
+
+  def draw(self, color: Color):
+    plt.plot(
+        [self.p.x, self.q.x],
+        [self.p.y, self.q.y],
+        color.value,
+        linewidth=1
+    )
 
   def contains(self, point) -> bool:
     if is_infinity(self.line.slope):
@@ -99,7 +115,7 @@ class LineSegment:
 
     return self.contains(other.p) or self.contains(other.q)
 
-  def closest_point_to(self, point: Point_2d) -> Point_2d:
+  def closest_point_to(self, point: Point) -> Point:
     closest = self.line.closest_position_to_point(point)
 
     if self.contains(closest):
@@ -115,6 +131,7 @@ class LineSegment:
         return self.p
       return self.q
 
+    # vertical
     if min(self.p.y, self.q.y) > closest.y:
       if self.p.y < self.q.y:
         return self.p
