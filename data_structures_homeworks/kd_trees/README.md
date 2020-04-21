@@ -7,6 +7,10 @@ my homework solution for the [kd-trees programming assignment](https://coursera.
 ```bash
 python client.py
 ```
+
+here's what should pop up:
+![Image of dots](https://github.com/ngozinwogwugwu/exercises/blob/master/data_structures_homeworks/kd_trees/Screen%20Shot%202020-04-21%20at%206.57.37%20PM.png)
+
 ## The files here
 geometry files:
 ```
