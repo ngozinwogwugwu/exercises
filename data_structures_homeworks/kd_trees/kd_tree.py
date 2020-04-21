@@ -1,5 +1,7 @@
-from point_2d import Point
+from point_2d import Point, max_value
 from enum import Enum
+from rectangle import Rectangle
+from line_segment import LineSegment, Color
 
 
 class NodeSide(Enum):
@@ -22,6 +24,46 @@ class Node:
     self.right = EmptyNode(level + 1)
     self.level = level
     self.parent = parent
+    self.rectangle = self.get_rectangle()
+
+  def is_vertical(self):
+    return self.level % 2 == 0
+
+  def get_rectangle(self):
+    if self.parent == None:
+      return Rectangle(0, max_value, 0, max_value)
+    x_min = self.parent.rectangle.x_min
+    x_max = self.parent.rectangle.x_max
+    y_min = self.parent.rectangle.y_min
+    y_max = self.parent.rectangle.y_max
+
+    if self.is_vertical():
+      if self.point.y > self.parent.point.y:
+        y_min = self.parent.point.y
+      else:
+        y_max = self.parent.point.y
+    else:
+      if self.point.x > self.parent.point.x:
+        x_min = self.parent.point.x
+      else:
+        x_max = self.parent.point.x
+
+    return Rectangle(x_min, x_max, y_min, y_max)
+
+  def draw(self):
+    if self.is_vertical():
+      LineSegment(
+        Point(self.point.x, self.rectangle.y_max),
+        Point(self.point.x, self.rectangle.y_min)
+      ).draw(Color.RED)
+    else:
+      LineSegment(
+        Point(self.rectangle.x_max, self.point.y),
+        Point(self.rectangle.x_min, self.point.y)
+      ).draw(Color.BLUE)
+
+    self.point.draw()
+
 
   def __repr__(self):
     return f"{self.point}"
@@ -65,7 +107,7 @@ class Kd_Tree:
       return self.get_leaf(node.right, point)
 
   def get_leaf_side(self, node: Node, point: Point) -> NodeSide:
-    if node.level % 2 == 0:
+    if node.is_vertical():
       if point.x < node.point.x:
         return NodeSide.LEFT
       else:

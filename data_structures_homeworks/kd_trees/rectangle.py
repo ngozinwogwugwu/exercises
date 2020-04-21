@@ -16,10 +16,10 @@ class Rectangle:
     self.bottom_right = Point(x_max, y_min)
 
     self.line_segments = [
-      LineSegment(self.top_left, self.top_right),
-      LineSegment(self.bottom_left, self.bottom_right),
-      LineSegment(self.top_left, self.bottom_left),
-      LineSegment(self.top_right, self.bottom_right),
+        LineSegment(self.top_left, self.top_right),
+        LineSegment(self.bottom_left, self.bottom_right),
+        LineSegment(self.top_left, self.bottom_left),
+        LineSegment(self.top_right, self.bottom_right),
     ]
 
   def __repr__(self) -> str:
@@ -40,7 +40,7 @@ class Rectangle:
       for other_line in other.line_segments:
         if self_line.intersects(other_line):
           return True
-    return False
+    return other.x_max <= self.x_max and other.x_min >= self.x_min and other.y_max <= self.y_max and other.y_min >= self.y_min
 
   def distance_squared_to(self, point):
     return self.distance_to(point)**2

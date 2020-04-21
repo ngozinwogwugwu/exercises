@@ -38,7 +38,7 @@ class TestRectangle(unittest.TestCase):
 
     self.assertTrue(rectangle_1.intersects(rectangle_2))
     self.assertTrue(rectangle_1.intersects(rectangle_3))
-    self.assertFalse(rectangle_1.intersects(rectangle_4))
+    self.assertTrue(rectangle_1.intersects(rectangle_4))
     self.assertFalse(rectangle_2.intersects(rectangle_3))
 
   def test_distance_to(self):

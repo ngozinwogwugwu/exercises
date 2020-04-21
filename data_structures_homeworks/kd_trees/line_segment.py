@@ -99,12 +99,12 @@ class LineSegment:
     if is_infinity(self.line.slope):
       if point.x != self.p.x:
         return False
-      return (self.p < point and point < self.q) or (self.q < point and point < self.p)
+      return (self.p <= point and point <= self.q) or (self.q <= point and point <= self.p)
 
     if self.line.get_y(point.x) != point.y:
       return False
 
-    return (self.p.x < point.x and point.x < self.q.x) or (self.q.x < point.x and point.x < self.p.x)
+    return (self.p.x <= point.x and point.x <= self.q.x) or (self.q.x <= point.x and point.x <= self.p.x)
 
   def overlaps(self, other) -> bool:
     if is_infinity(self.line.slope) and self.p.x != other.p.x:

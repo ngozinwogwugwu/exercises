@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 from math import sqrt
 
+max_value = 10
+
 class Point:
   def __init__(self, x: float, y: float) -> None:
     self.x = x
@@ -11,6 +13,10 @@ class Point:
 
   def draw(self):
     plt.plot(self.x, self.y, 'ko')
+    # plt.text(self.x, self.y, f"({self.x}, {self.y})")
+
+  def draw_special(self):
+    plt.plot(self.x, self.y, 'ro')
 
   def distance_to(self, other_point) -> float:
     return sqrt(self.distance_squared_to(other_point))
@@ -43,5 +49,15 @@ class Point:
       return False
 
     if self.x < other.x:
+      return True
+    return False
+
+  def __le__(self, other):
+    if self.y <= other.y:
+      return True
+    if self.y > other.y:
+      return False
+
+    if self.x <= other.x:
       return True
     return False

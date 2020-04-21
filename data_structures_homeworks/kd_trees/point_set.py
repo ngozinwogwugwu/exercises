@@ -1,9 +1,9 @@
 from typing import List, Tuple
 
-from point_2d import Point
+from point_2d import Point, max_value
 from rectangle import Rectangle
 from line_segment import LineSegment, Color
-from kd_tree import Kd_Tree, EmptyNode
+from kd_tree import Kd_Tree, EmptyNode, Node
 
 import matplotlib.pyplot as plt
 
@@ -11,58 +11,55 @@ class Point_Set:
   def __init__(self):
     self.kd = Kd_Tree()
 
-  def __repl__(self):
+  def __repl__(self) -> Kd_Tree:
     return self.kd
 
-  def is_empty(self):
+  def is_empty(self) -> bool:
     return self.kd.is_empty()
 
-  def size(self):
+  def size(self) -> int:
     return self.kd.size()
 
-  def contains(self, point: Point):
+  def contains(self, point: Point) -> bool:
     return self.kd.contains()
 
-  def insert(self, point: Point):
-    return self.kd.insert(point)
+  def insert(self, point: Point) -> None:
+    self.kd.insert(point)
 
-  def draw(self):
+  def draw(self) -> None:
     if self.is_empty():
       return
 
     nodes = [self.kd.root]
     for node in nodes:
-      if node.level%2  == 0:
-        self.draw_vertical_line(node.point, node.parent)
-      else:
-        self.draw_horizontal_line(node.point, node.parent)
-
-      node.point.draw()
+      node.draw()
 
       if node.left.__class__ != EmptyNode:
         nodes.append(node.left)
       if node.right.__class__ != EmptyNode:
         nodes.append(node.right)
 
-  def draw_vertical_line(self, point, parent):
-    top = Point(point.x, 10)
-    bottom = Point(point.x, 0)
+  def draw_range(self, rectangle: Rectangle) -> None:
+    rectangle.draw()
 
-    if parent is not None:
-      if point.y < parent.point.y:
-        top.y = parent.point.y
-      else:
-        bottom.y = parent.point.y
-    LineSegment(top, bottom).draw(Color.RED)
+    for point in self.range(rectangle, self.kd.root):
+      point.draw_special()
 
-  def draw_horizontal_line(self, point, parent):
-    top = Point(10, point.y)
-    bottom = Point(0, point.y)
 
-    if parent is not None:
-      if point.x < parent.point.x:
-        top.x = parent.point.x
-      else:
-        bottom.x = parent.point.x
+  def range(self, rectangle: Rectangle, node: Node) -> List[Point]:
+    if not node.rectangle.intersects(rectangle):
+      return []
 
-    LineSegment(top, bottom).draw(Color.BLUE)
+    points = []
+
+    if rectangle.contains(node.point):
+      points.append(node.point)
+
+    if node.left.__class__ != EmptyNode:
+      points += self.range(rectangle, node.left)
+    if node.right.__class__ != EmptyNode:
+      points += self.range(rectangle, node.right)
+
+    return points
+
+

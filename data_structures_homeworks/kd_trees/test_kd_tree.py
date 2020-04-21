@@ -1,4 +1,5 @@
-from point_2d import Point
+from rectangle import Rectangle
+from point_2d import Point, max_value
 from kd_tree import Node, Kd_Tree
 import unittest
 
@@ -29,6 +30,12 @@ class TestKd_Tree(unittest.TestCase):
 
   def test_size(self):
     self.assertEqual(self.kd.size(), 5)
+
+  def test_rectangle(self):
+    self.assertEqual(
+      self.kd.root.left.right.rectangle,
+      Rectangle(0, 7, 4, max_value)
+    )
 
 
 if __name__ == "__main__":
