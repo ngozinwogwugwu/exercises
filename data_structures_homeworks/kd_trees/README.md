@@ -2,7 +2,11 @@
 my homework solution for the [kd-trees programming assignment](https://coursera.cs.princeton.edu/algs4/assignments/kdtree/specification.php)
 
 [Kd-Trees](https://en.wikipedia.org/wiki/K-d_tree) are a space partitioning data structure. I'm using it here to efficiently find points in the range of a rectangle
-
+- the black dots represent all the points in the data set
+- the rectangle is outlined in black
+- the red dots represent the points within the rectangle
+- the blue lines represent horizontal partitions
+- the red lines represent vertical partitions
 
 ## How to run it yourself
 ```bash
