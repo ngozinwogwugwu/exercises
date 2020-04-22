@@ -10,7 +10,6 @@ class PercolationStats:
   def single_threshold(self):
     perc = Percolation(self.n)
 
-    # import pdb; pdb.set_trace()
     while not perc.percolates():
       perc.open(
           row=randint(0, self.n - 1),
