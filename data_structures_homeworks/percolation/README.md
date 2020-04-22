@@ -1,5 +1,5 @@
 # Percolation
-here's my solution, in python for the [percolation programming assignment](https://coursera.cs.princeton.edu/algs4/assignments/percolation/specification.php)
+here's my solution, in python, for the [percolation programming assignment](https://coursera.cs.princeton.edu/algs4/assignments/percolation/specification.php)
 
 I'm modeling [percolation](https://en.wikipedia.org/wiki/Percolation) here using an _n_ by _n_ grid. The grid percolates if there is a path from the top to the bottom through open nodes.
 
