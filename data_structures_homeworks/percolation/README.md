@@ -24,6 +24,8 @@ It does this three times. You should see something like this:
 
 ![percolation animation](https://github.com/ngozinwogwugwu/exercises/blob/master/data_structures_homeworks/percolation/run_stats.png)
 
+which indicates that p is ~0.953
+
 ## The files here
 test files
 ```
