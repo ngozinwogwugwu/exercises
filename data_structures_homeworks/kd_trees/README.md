@@ -1,7 +1,6 @@
 # Kd-Trees
 my homework solution for the [kd-trees programming assignment](https://coursera.cs.princeton.edu/algs4/assignments/kdtree/specification.php)
 
-## What's up with Kd Trees?
 [Kd-Trees](https://en.wikipedia.org/wiki/K-d_tree) are a space partitioning data structure. I'm using it here to efficiently find points in the range of a rectangle
 
 
