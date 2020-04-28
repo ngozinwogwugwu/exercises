@@ -9,8 +9,8 @@ python client.py
 ```
 should display two graphs. The first one shows all points given in `input8.txt`, and the second shows the lines formed by them
 
-![dots](https://github.com/ngozinwogwugwu/exercises/blob/master/data_structures_homeworks/colliniar_points/dots.png)
-![lines](https://github.com/ngozinwogwugwu/exercises/blob/master/data_structures_homeworks/colliniar_points/lines.png)
+![dots](https://github.com/ngozinwogwugwu/exercises/blob/master/data_structures_homeworks/collinear_points/dots.png)
+![lines](https://github.com/ngozinwogwugwu/exercises/blob/master/data_structures_homeworks/collinear_points/lines.png)
 
 ## The files here
 unit tests and collinear points
