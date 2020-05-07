@@ -42,7 +42,6 @@ class Solution:
             return []
         if node.left is None and node.right is None:
             return [current_depth]
-
         return self.get_depths(node.left, current_depth + 1) + self.get_depths(node.right, current_depth + 1)
 
 
@@ -60,7 +59,6 @@ class TestSolution(unittest.TestCase):
         root = TreeNode(1, left, right)
 
         self.assertEqual(self.solution.diameterOfBinaryTree(root), 3)
-
 
     def test_my_case(self):
         #           1
